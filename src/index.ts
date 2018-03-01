@@ -6,5 +6,5 @@ app.listen(PORT, () => {
   console.log(
     `GraphQL Server is now running on http://localhost:${PORT}/graphql`,
   );
-  console.log(`View GraphiQL at http://localhost:${PORT}/graphiql`);
+  console.log(`View GraphiQL at http://localhost:${PORT}`);
 });

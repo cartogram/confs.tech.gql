@@ -9,20 +9,25 @@
   "homepage": "https://confs.tech",
   "main": "dist/index.js",
   "scripts": {
+    "deploy": "now --public",
     "start": "nodemon --config nodemon.json",
+    "now-start": "NODE_ENV=production node dist/index.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/*.ts'",
-    "build": "rm -rf dist/* webpack --config webpack.config.js --progress --profile --bail",
+    "build": "rm -rf dist/* && webpack --mode production --config webpack.config.js --progress --profile --bail",
     "test": "jest"
   },
-  "author": "",
+  "author": "Matt Seccafien <mseccafien@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^9.4.6",
     "fs-extra": "^5.0.0",
     "graphql": "^0.13.1",
     "graphql-tools": "^2.21.0",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "now": "^10.1.0",
+    "now-logs": "^0.0.7"
   },
   "devDependencies": {
     "@types/fs-extra": "^5.0.1",
