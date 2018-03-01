@@ -13,27 +13,36 @@ enum TOPIC {
 }
 
 interface ConferenceOptions {
+  country: string;
   year: number;
   topic: TOPIC;
 }
 
-async function getConferences({year, topic}: ConferenceOptions) {
+async function getConferences({year, topic, country}: ConferenceOptions) {
 
   const basePath = process.env.NODE_ENV === 'production'
     ? path.resolve(__dirname, './home/nowuser/src/data')
     : 'data';
 
+  let results;
   try {
-    return await fs.readJson(`${basePath}/conferences/${year}/${topic.toLocaleLowerCase()}.json`);
+    results = await fs.readJson(`${basePath}/conferences/${year}/${topic.toLocaleLowerCase()}.json`);
   } catch (err) {
     console.error(err);
   }
+
+  if (country) {
+    results = results.filter(result => result.country === country);
+  }
+
+  return results;
 }
 
 export const resolvers = {
   Query: {
-    conferences: (_, {year, topic}) => getConferences(
+    conferences: (_, {year, topic, country}) => getConferences(
     {
+      country,
       topic,
       year,
    },

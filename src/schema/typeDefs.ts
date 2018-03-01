@@ -1,5 +1,11 @@
 export const typeDefs = `
-  type Query { conferences(year: Int!, topic: TOPIC!): [Conference] }
+  type Query {
+    conferences(
+      year: Int!,
+      country: String,
+      topic: TOPIC!
+    ): [Conference]
+  }
   enum TOPIC {
     JAVSCRIPT
     GENERAL
@@ -16,6 +22,9 @@ export const typeDefs = `
     cfpEndDate: String,
     cfpUrl: String,
     city: String,
-    country: String
+    country: String,
+    twitter: String,
+    startDate: String,
+    endDate: String
   }
 `;

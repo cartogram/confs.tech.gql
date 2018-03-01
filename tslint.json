@@ -5,6 +5,7 @@
     "no-console": false,
     "quotemark": [true, "single", "jsx-double"],
     "interface-name": [false],
-    "only-arrow-functions": false
+    "only-arrow-functions": false,
+    "arrow-parens": [true, "ban-single-arg-parens"]
   }
 }
