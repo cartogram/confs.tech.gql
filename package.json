@@ -1,0 +1,11 @@
+{
+  "name": "confs-tect-gql",
+  "version": "1.0.0",
+  "description": "GraphQL API for confs.tech",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}
