@@ -1,4 +1,5 @@
 import * as fs from 'fs-extra';
+import * as path from 'path';
 
 enum TOPIC {
   JAVSCRIPT = 'javascript',
@@ -17,8 +18,13 @@ interface ConferenceOptions {
 }
 
 async function getConferences({year, topic}: ConferenceOptions) {
+
+  const basePath = process.env.NODE_ENV === 'production'
+    ? path.resolve(__dirname, './home/nowuser/src/data')
+    : 'data';
+
   try {
-    return await fs.readJson(`data/conferences/${year}/${topic}.json`);
+    return await fs.readJson(`${basePath}/conferences/${year}/${topic.toLocaleLowerCase()}.json`);
   } catch (err) {
     console.error(err);
   }
