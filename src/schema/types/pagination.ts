@@ -47,8 +47,8 @@ export function bota(input: string): string {
   return new Buffer(input.toString(), 'binary').toString("base64");
 }
 
-export function convertCursorToNodeId(cursor: string): number {
-  return parseInt(atob(cursor));
+export function convertCursorToNodeId(cursor: string): string {
+  return atob(cursor);
 }
 
 export function atob(input: string): string {

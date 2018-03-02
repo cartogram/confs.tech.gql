@@ -32,24 +32,27 @@ export async function getConferences({after, first, year, topic, country, city}:
 
   let results;
   let afterIndex: number = 0;
-  const sliceIndex = afterIndex + 1;
-  
+
   try {
     results = await fs.readJson(`${basePath}/conferences/${year}/${topic.toLocaleLowerCase()}.json`);
   } catch (err) {
     console.error(err);
   }
 
-  if (typeof after === "string") {
-    let id = convertCursorToNodeId(after);
-    if (typeof id === "number") {
-      const matchingIndex = results.findIndex(conf => conf.id === id);
-      if (matchingIndex != -1) {
-        afterIndex = matchingIndex;
-      }
+  let name;
+  if (after) {
+    name = convertCursorToNodeId(after);
+  }
+
+  if (name) {
+    const matchingIndex = results.findIndex(conf => conf.name === name);
+    if (matchingIndex != -1) {
+      afterIndex = matchingIndex;
     }
   }
-  
+
+  const sliceIndex = afterIndex + 1;
+
   if (country) {
     results = results.filter(result => result.country === country);
   }
@@ -61,13 +64,13 @@ export async function getConferences({after, first, year, topic, country, city}:
   const edges = results
     .slice(sliceIndex, sliceIndex + first)
     .map(node => ({
-        node,
-        cursor: convertNodeToCursor(node)
+      node,
+      cursor: convertNodeToCursor(node)
     }));
 
   const startCursor = edges.length > 0 ? convertNodeToCursor(edges[0].node) : null;
   const endCursor = edges.length > 0 ? convertNodeToCursor(edges[edges.length-1].node) : null;
-  const hasNextPage = results.length > sliceIndex + first;
+  const hasNextPage = results.length > afterIndex + first;
 
   return {
     totalCount: results.length,
