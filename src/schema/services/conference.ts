@@ -1,15 +1,26 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import {TOPIC} from './types';
 
-interface ConferenceOptions {
+export enum Topic {
+  JAVSCRIPT = 'javascript',
+  GENERAL = 'general',
+  ANDROID = 'android',
+  PHP = 'php',
+  CSS = 'css',
+  SECURITY = 'security',
+  RUBY = 'ruby',
+  IOS = 'ios',
+}
+
+export interface ConferenceOptions {
   city?: string;
   country?: string;
   year: number;
-  topic: TOPIC;
+  first: number;
+  topic: Topic;
 }
 
-async function getConferences({year, topic, country, city}: ConferenceOptions) {
+export async function getConferences({first, year, topic, country, city}: ConferenceOptions) {
   const basePath = process.env.NODE_ENV === 'production'
     ? path.resolve(__dirname, './home/nowuser/src/data')
     : 'data';
@@ -21,6 +32,9 @@ async function getConferences({year, topic, country, city}: ConferenceOptions) {
     console.error(err);
   }
 
+  results = results.slice(0, first);
+  
+
   if (country) {
     results = results.filter(result => result.country === country);
   }
@@ -31,14 +45,3 @@ async function getConferences({year, topic, country, city}: ConferenceOptions) {
 
   return results;
 }
-
-export const resolvers = {
-  Query: {
-    conferences: (_, {year, topic, country, city}) => getConferences(
-    {
-      city,
-      country,
-      topic,
-      year,
-   },
- )}};
