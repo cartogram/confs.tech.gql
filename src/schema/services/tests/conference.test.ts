@@ -2,6 +2,17 @@ import {Topic as TopicType, getConferences} from '../conference';
 import {Topic} from '../../types';
  
 describe('getConferences()', () => {
+  it('returns the correct amount of conferences based on the `first` argument', async () => {
+    const first = 1;
+    const results = await getConferences({
+      topic: TopicType.RUBY,
+      year: 2018,
+      first,
+    });
+
+    expect(results.edges).toHaveLength(first)
+  });
+
   it('returns conferences with the correct country', async () => {
     const country = 'Germany';
     const results = await getConferences({
@@ -11,7 +22,7 @@ describe('getConferences()', () => {
       first: 10,
     });
 
-    results.forEach(conference => {
+    results.edges.forEach(conference => {
       expect(conference.country).toBe(country);
     });
   });
@@ -25,7 +36,7 @@ describe('getConferences()', () => {
       first: 10,
     });
 
-    results.forEach(conference => {
+    results.edges.forEach(conference => {
       expect(conference.city).toBe(city);
     });
   });
