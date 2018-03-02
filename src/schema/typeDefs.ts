@@ -3,6 +3,7 @@ export const typeDefs = `
     conferences(
       year: Int!,
       country: String,
+      city: String,
       topic: TOPIC!
     ): [Conference]
   }
