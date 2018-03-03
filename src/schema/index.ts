@@ -1,20 +1,10 @@
-// import {makeExecutableSchema} from 'graphql-tools';
-
-// import {resolvers} from './resolvers';
-// import {typeDefs} from './typeDefs';
-
-// export default makeExecutableSchema({
-//   resolvers,
-//   typeDefs,
-// });
-
-
 import { GraphQLSchema } from 'graphql';
 
-import query from './types/query';
+import {Query, Mutation} from './types';
 
 const schema = new GraphQLSchema({
-  query
+  query: Query,
+  mutation: Mutation,
 });
 
 export default schema;

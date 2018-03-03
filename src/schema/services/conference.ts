@@ -1,9 +1,24 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as createIssue from 'github-create-issue';
+
 import {
   convertCursorToNodeId,
   convertNodeToCursor,
 } from '../types/pagination'
+
+export interface Conference {
+  year: number;
+  topic: Topic;
+  country: string;
+  city: string;
+  name: string;
+  startdate: string;
+  cfpEndDate: string;
+  cfpUrl: string;
+  url: string;
+  twitter: string;
+}
 
 export enum Topic {
   JAVSCRIPT = 'javascript',
@@ -81,4 +96,35 @@ export async function getConferences({after, first, year, topic, country, city}:
       hasNextPage
     }
   }
+}
+
+export async function addConference(conference: Conference) {
+  const body = `
+    \`\`\`
+      {
+        cfpEndDate: ${conference.cfpEndDate},
+        cfpUrl: ${conference.cfpUrl},
+        city: ${conference.city},
+        country: ${conference.country},
+        name: ${conference.name},
+        startdate: ${conference.startdate},
+        topic: ${conference.topic},
+        twitter: ${conference.twitter}, 
+        url: ${conference.url}, 
+        year: ${conference.year},
+      }
+    \`\`\`
+  `
+
+  createIssue(
+    'cartogram/confs.tech.gql', 
+    `Add: ${conference.name}`, 
+    {
+      token: "1350d2f39f11e2b06eb38f94ec6b1de22bfec350",
+      body,
+    }, 
+    () => console.log('added conference', conference)
+  );
+
+  return conference
 }

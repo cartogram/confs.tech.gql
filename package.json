@@ -21,6 +21,7 @@
   "dependencies": {
     "@types/node": "^9.4.6",
     "fs-extra": "^5.0.0",
+    "github-create-issue": "^2.0.0",
     "graphql": "^0.13.1",
     "graphql-relay": "^0.5.4",
     "jest": "^22.4.2",

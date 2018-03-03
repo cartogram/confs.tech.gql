@@ -13,7 +13,7 @@ import {Page} from './pagination';
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',
-  description: 'Query any Pokémon by number or name',
+  description: 'Query conferences',
   fields: () => ({
     conferences: {
       type: Page(Conference),
