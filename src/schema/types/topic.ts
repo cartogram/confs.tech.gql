@@ -9,7 +9,7 @@ export default new GraphQLEnumType({
     GENERAL: { value: 'general' },
     ANDROID: { value: 'android' },
     CSS: { value: 'css' },
-    SECURITY: { value:'security' },
+    SECURITY: { value: 'security' },
     IOS: { value: 'ios' },
-  }
+  },
 });

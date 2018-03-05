@@ -1,14 +1,14 @@
 import {
-  GraphQLObjectType,
   GraphQLInt,
-  GraphQLString,
   GraphQLList,
   GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLString,
 } from 'graphql';
 import {fromGlobalId} from 'graphql-relay';
 
+import {ConferenceOptions, getConferences} from '../services/conference';
 import {Conference, Topic} from './';
-import {ConferenceOptions, getConferences} from '../services/conference'
 import {Page} from './pagination';
 
 const QueryType = new GraphQLObjectType({
@@ -24,7 +24,7 @@ const QueryType = new GraphQLObjectType({
         },
         after: {
           type: GraphQLString,
-          description: 'The cursor value of an item returned in previous page.'
+          description: 'The cursor value of an item returned in previous page.',
         },
         year: {
           type: new GraphQLNonNull(GraphQLInt),
@@ -37,9 +37,9 @@ const QueryType = new GraphQLObjectType({
         },
         city: {
           type: GraphQLString,
-        }
+        },
       },
-      resolve: async (obj, args: ConferenceOptions) => await getConferences(args)
+      resolve: async (obj, args: ConferenceOptions) => await getConferences(args),
     },
   }),
 });

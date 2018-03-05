@@ -1,11 +1,11 @@
 import * as fs from 'fs-extra';
-import * as path from 'path';
 import * as createIssue from 'github-create-issue';
+import * as path from 'path';
 
 import {
   convertCursorToNodeId,
   convertNodeToCursor,
-} from '../types/pagination'
+} from '../types/pagination';
 
 export interface Conference {
   year: number;
@@ -37,7 +37,7 @@ export interface ConferenceOptions {
   year: number;
   first: number;
   topic: Topic;
-  after?: string,
+  after?: string;
 }
 
 export async function getConferences({after, first, year, topic, country, city}: ConferenceOptions) {
@@ -61,7 +61,7 @@ export async function getConferences({after, first, year, topic, country, city}:
 
   if (name) {
     const matchingIndex = results.findIndex(conf => conf.name === name);
-    if (matchingIndex != -1) {
+    if (matchingIndex !== -1) {
       afterIndex = matchingIndex;
     }
   }
@@ -79,23 +79,23 @@ export async function getConferences({after, first, year, topic, country, city}:
   const edges = results
     .slice(sliceIndex, sliceIndex + first)
     .map(node => ({
+      cursor: convertNodeToCursor(node),
       node,
-      cursor: convertNodeToCursor(node)
     }));
 
   const startCursor = edges.length > 0 ? convertNodeToCursor(edges[0].node) : null;
-  const endCursor = edges.length > 0 ? convertNodeToCursor(edges[edges.length-1].node) : null;
+  const endCursor = edges.length > 0 ? convertNodeToCursor(edges[edges.length - 1].node) : null;
   const hasNextPage = results.length > afterIndex + first;
 
   return {
-    totalCount: results.length,
     edges,
     pageInfo: {
-      startCursor,
       endCursor,
-      hasNextPage
-    }
-  }
+      hasNextPage,
+      startCursor,
+    },
+    totalCount: results.length,
+  };
 }
 
 export async function addConference(conference: Conference) {
@@ -109,22 +109,22 @@ export async function addConference(conference: Conference) {
         name: ${conference.name},
         startdate: ${conference.startdate},
         topic: ${conference.topic},
-        twitter: ${conference.twitter}, 
-        url: ${conference.url}, 
+        twitter: ${conference.twitter},
+        url: ${conference.url},
         year: ${conference.year},
       }
     \`\`\`
-  `
+  `;
 
   createIssue(
-    'cartogram/confs.tech.gql', 
-    `Add: ${conference.name}`, 
+    'cartogram/confs.tech.gql',
+    `Add: ${conference.name}`,
     {
-      token: "1350d2f39f11e2b06eb38f94ec6b1de22bfec350",
+      // token: '1350d2f39f11e2b06eb38f94ec6b1de22bfec350',
       body,
-    }, 
-    () => console.log('added conference', conference)
+    },
+    () => console.log('added conference', conference),
   );
 
-  return conference
+  return conference;
 }

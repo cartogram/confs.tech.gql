@@ -1,12 +1,12 @@
 import {
-  GraphQLObjectType,
   GraphQLInt,
   GraphQLNonNull,
+  GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
 
+import {addConference, Conference as ConferenceType} from '../services/conference';
 import {Conference} from './';
-import {Conference as ConferenceType, addConference} from '../services/conference'
 
 const MutationType = new GraphQLObjectType({
   name: 'Mutation',
@@ -43,11 +43,11 @@ const MutationType = new GraphQLObjectType({
         },
         cfpEndDate: {
           type: GraphQLString,
-        }
+        },
       },
-      resolve: async (obj, args:ConferenceType) => await addConference(args)    }
-  })
+      resolve: async (obj, args: ConferenceType) => await addConference(args),
+    },
+  }),
 });
 
 export default MutationType;
-  

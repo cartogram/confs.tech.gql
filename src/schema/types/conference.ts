@@ -1,9 +1,9 @@
 import {
+  GraphQLFloat,
+  GraphQLInt,
+  GraphQLList,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLInt,
-  GraphQLFloat,
-  GraphQLList,
 } from 'graphql';
 
 import {globalIdField} from 'graphql-relay';
@@ -23,40 +23,40 @@ const Conference = new GraphQLObjectType({
     slug: {
       type: GraphQLString,
       description: 'A generated slug based on the Conference name and year',
-      resolve: obj => slugify(obj.name)
+      resolve: obj => slugify(obj.name),
     },
     twitter: {
       type: GraphQLString,
-      resolve: obj => obj.twitter
+      resolve: obj => obj.twitter,
     },
     url: {
       type: GraphQLString,
-      resolve: obj => obj.url
+      resolve: obj => obj.url,
     },
     startDate: {
       type: GraphQLString,
-      resolve: obj => obj.startDate
+      resolve: obj => obj.startDate,
     },
     endDate: {
       type: GraphQLString,
-      resolve: obj => obj.endDate
+      resolve: obj => obj.endDate,
     },
     city: {
       type: GraphQLString,
-      resolve: obj => obj.city
+      resolve: obj => obj.city,
     },
     country: {
       type: GraphQLString,
-      resolve: obj => obj.country
+      resolve: obj => obj.country,
     },
     cfpUrl: {
       type: GraphQLString,
-      resolve: obj => obj.cfpUrl
+      resolve: obj => obj.cfpUrl,
     },
     cfpEndDate: {
       type: GraphQLString,
-      resolve: obj => obj.cfpEndDate
-    }
+      resolve: obj => obj.cfpEndDate,
+    },
   }),
 });
 

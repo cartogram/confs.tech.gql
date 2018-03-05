@@ -1,6 +1,6 @@
-import {Topic as TopicType, getConferences} from '../conference';
 import {Topic} from '../../types';
- 
+import {getConferences, Topic as TopicType} from '../conference';
+
 describe('getConferences()', () => {
   it('returns the correct amount of conferences based on the `first` argument', async () => {
     const first = 1;
@@ -10,7 +10,7 @@ describe('getConferences()', () => {
       first,
     });
 
-    expect(results.edges).toHaveLength(first)
+    expect(results.edges).toHaveLength(first);
   });
 
   it('returns conferences with the correct country', async () => {
@@ -23,7 +23,7 @@ describe('getConferences()', () => {
     });
 
     results.edges.forEach(conference => {
-      expect(conference.country).toBe(country);
+      expect(conference.node.country).toBe(country);
     });
   });
 
